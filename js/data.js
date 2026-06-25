@@ -77,13 +77,36 @@ const SEED_BOOKS = [
     pdfFile: "assets/pdfs/web3-final.pdf",
     externalLink: "",
     publishDate: "2026-06-25"
+  },
+  {
+    id: "msce-curriculum-guidelines",
+    title: "MSCE Academic Curriculum & Syllabus",
+    author: "Meenakshi Sundararajan Engineering College",
+    category: "guides",
+    description: "Official syllabus, course curriculum, and academic regulations guide for the civil and structural engineering departments (MSCE). Includes semester guidelines, course metrics, and credit details.",
+    coverImage: "assets/covers/msce-curriculum.jpg",
+    pdfFile: "assets/pdfs/mscepdf.pdf",
+    externalLink: "",
+    publishDate: "2025-06-25"
+  },
+  {
+    id: "msec-academic-regulations-2025",
+    title: "MSEC Academic Regulations Handbook 2025",
+    author: "Meenakshi Sundararajan Engineering College",
+    category: "guides",
+    description: "Comprehensive academic regulations, evaluation guidelines, credit frameworks, and university requirements for the 2025 academic sweeps at MSEC.",
+    coverImage: "assets/covers/msec-regulations.jpg",
+    pdfFile: "assets/pdfs/msecpdf2025.pdf",
+    externalLink: "",
+    publishDate: "2025-09-01"
   }
 ];
 
 // Initialize storage
-if (!localStorage.getItem("kim_books") || !JSON.parse(localStorage.getItem("kim_books")).find(b => b.id === "web3-final")) {
+if (!localStorage.getItem("kim_books") || !JSON.parse(localStorage.getItem("kim_books")).find(b => b.id === "msec-academic-regulations-2025")) {
   localStorage.setItem("kim_books", JSON.stringify(SEED_BOOKS));
 }
+
 
 
 export function getBooks() {
