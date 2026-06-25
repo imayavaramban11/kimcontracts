@@ -1,6 +1,8 @@
 // PDFReader Component - Premium in-app document viewer
+import { getBook } from "../data.js";
 
 const MOCK_PAGES_DATA = {
+
   "contract-drafting-guide": [
     {
       title: "Principles of Contract Drafting",
@@ -298,12 +300,89 @@ export function openPDFReader(bookId, bookTitle, bookCategory) {
   
   // Lock body scrolling
   document.body.style.overflow = "hidden";
-  
-  updatePageContent();
-  updateZoom();
+
+  const book = getBook(bookId);
+  const isRealPDF = book && book.pdfFile;
+
+  const contentViewer = document.querySelector(".pdf-content-viewer");
+  const toolbarCenter = document.querySelector(".pdf-toolbar-center");
+
+  if (isRealPDF) {
+    // Hide simulated pagination
+    if (toolbarCenter) toolbarCenter.style.display = "none";
+    
+    // Hide simulated zoom elements
+    const zoomInBtn = document.getElementById("pdf-zoom-in");
+    const zoomOutBtn = document.getElementById("pdf-zoom-out");
+    const zoomLevel = document.getElementById("pdf-zoom-level");
+    if (zoomInBtn) zoomInBtn.style.display = "none";
+    if (zoomOutBtn) zoomOutBtn.style.display = "none";
+    if (zoomLevel) zoomLevel.style.display = "none";
+
+    // Set download link actions to trigger browser downloads of real file
+    const downloadAction = document.getElementById("pdf-download-action");
+    if (downloadAction) {
+      downloadAction.onclick = () => {
+        const link = document.createElement("a");
+        link.href = book.pdfFile;
+        link.download = `${book.id}.pdf`;
+        link.click();
+      };
+    }
+
+    if (contentViewer) {
+      contentViewer.innerHTML = `
+        <iframe src="${book.pdfFile}" style="width: 100%; height: 100%; border: none; background: #334155; border-radius: var(--border-radius-sm);" title="${book.title}"></iframe>
+      `;
+    }
+  } else {
+    // Restore elements for simulated view
+    if (toolbarCenter) toolbarCenter.style.display = "flex";
+    
+    const zoomInBtn = document.getElementById("pdf-zoom-in");
+    const zoomOutBtn = document.getElementById("pdf-zoom-out");
+    const zoomLevel = document.getElementById("pdf-zoom-level");
+    if (zoomInBtn) zoomInBtn.style.display = "inline-flex";
+    if (zoomOutBtn) zoomOutBtn.style.display = "inline-flex";
+    if (zoomLevel) zoomLevel.style.display = "inline-flex";
+
+    // Restore simulated download alert
+    const downloadAction = document.getElementById("pdf-download-action");
+    if (downloadAction) {
+      downloadAction.onclick = () => {
+        alert("Simulated: Initiating file download stream for encrypted publication...");
+      };
+    }
+
+    if (contentViewer) {
+      contentViewer.innerHTML = `
+        <div class="pdf-page-canvas" id="pdf-page-canvas">
+          <div class="pdf-watermark">KIM CONTRACTS</div>
+          
+          <div class="pdf-page-header">
+            <span id="pdf-header-left">KIM CONTRACTS PUBLISHING</span>
+            <span id="pdf-header-right">CONFIDENTIAL REVIEW</span>
+          </div>
+          
+          <div class="pdf-page-body" id="pdf-page-body">
+            <!-- Rendered dynamically -->
+          </div>
+          
+          <div class="pdf-page-footer">
+            <span>&copy; 2026 KIM CONTRACTS LLC</span>
+            <span id="pdf-footer-page-indicator">PAGE 1 OF 3</span>
+          </div>
+        </div>
+      `;
+    }
+
+    updatePageContent();
+    updateZoom();
+  }
   
   overlay.classList.add("active");
 }
+
 
 function updatePageContent() {
   const body = document.getElementById("pdf-page-body");

@@ -53,10 +53,11 @@ export const Contact = {
               </div>
               <div class="contact-method-detail">
                 <h4>Email Communications</h4>
-                <p><a href="mailto:support@kimcontracts.com" style="color: var(--accent-color); font-weight: 600;">support@kimcontracts.com</a></p>
-                <p>For publication reviews: <a href="mailto:editor@kimcontracts.com" style="color: var(--text-primary);">editor@kimcontracts.com</a></p>
+                <p><a href="mailto:kimpatents001@gmail.com" style="color: var(--accent-color); font-weight: 600;">kimpatents001@gmail.com</a></p>
+                <p>For publication reviews: <a href="mailto:kimpatents001@gmail.com" style="color: var(--text-primary);">kimpatents001@gmail.com</a></p>
               </div>
             </div>
+
 
             <div class="contact-method">
               <div class="contact-method-icon">
